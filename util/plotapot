@@ -314,6 +314,7 @@ class PlotAPot:
         count = offset
         if len(self.partition[index]) > 1:
             f.write("set multiplot;\n")
+            sub_idx = 0
             for i in range(len(self.partition[index])):
                 f.write(
                     "set origin {},0;\n".format(
@@ -336,7 +337,7 @@ class PlotAPot:
                     if self.pot_table[j].do_smooth != 0:
                         f.write(")")
                     f.write(" w l")
-                    f.write(" t '%s'" % title_string[j])
+                    f.write(" t '%s'" % title_string[sub_idx])
                     f.write(" lt 0 lw 2 lc %s" % (j + 1 - count))
                     if index == 0 and self.args.pair_dist_file:
                         f.write(
@@ -350,6 +351,7 @@ class PlotAPot:
                         )
                     if j < count + self.partition[index][i] - 1:
                         f.write(", \\\n\t")
+                    sub_idx += 1
                 f.write(";\n")
                 count += self.partition[index][i]
         else:
